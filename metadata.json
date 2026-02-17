@@ -1,0 +1,7 @@
+{
+  "name": "RAAGA - Premium Music Streaming",
+  "description": "A feature-rich music streaming application inspired by Spotify, featuring multi-language support (English, Kannada, Tamil, Telugu, Malayalam), playlist creation, and pro-tier features.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
