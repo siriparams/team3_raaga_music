@@ -10,7 +10,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 210,
     language: 'Kannada',
     genre: 'Romance',
-    coverUrl: 'https://gaana.com/lyrics/belageddu',
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/5/5d/Kirik_Party_Poster.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     replays: 1200
   },
@@ -23,7 +23,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 195,
     language: 'Telugu',
     genre: 'Dance',
-    coverUrl: 'https://cloudtechservices.com/?e=53391685041930',
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Butta_Bomma.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     replays: 5000
   },
@@ -36,7 +36,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 200,
     language: 'English',
     genre: 'Synthwave',
-    coverUrl: 'https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b',
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/c/c1/The_Weeknd_-_After_Hours.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
     replays: 1000000
   },
@@ -49,7 +49,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 280,
     language: 'Tamil',
     genre: 'Folk-Pop',
-    coverUrl: 'https://en.wikipedia.org/wiki/Arabic_Kuthu',
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/1/12/Beast_Tamil_film.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
     replays: 3500
   },
@@ -62,7 +62,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 310,
     language: 'Malayalam',
     genre: 'Melody',
-    coverUrl: 'https://open.spotify.com/track/7MOHpwP0pcGOZ3JqN7UlCm',
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/5/5e/Premam_film_poster.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
     replays: 8900
   },
@@ -75,10 +75,13 @@ export const MOCK_SONGS: Song[] = [
     duration: 238,
     language: 'English',
     genre: 'Indie Pop',
-    coverUrl: 'https://en.wikipedia.org/wiki/Heat_Waves',
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/2/29/Glass_Animals_-_Dreamland.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
     replays: 150000
   }
 ];
+
+
+
 
 export const LANGUAGES = ['English', 'Kannada', 'Tamil', 'Telugu', 'Malayalam'] as const;
