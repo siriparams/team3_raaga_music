@@ -9,9 +9,10 @@ interface SidebarProps {
   onPlaylistSelect: (playlist: Playlist) => void;
   onCreatePlaylist: () => void;
   onUploadClick: () => void;
+  likedCount: number;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPlaylistSelect, onCreatePlaylist, onUploadClick }) => {
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPlaylistSelect, onCreatePlaylist, onUploadClick, likedCount }) => {
   return (
     <div className="w-72 bg-black flex flex-col gap-3 p-3 h-full border-right border-white/5">
       {/* Brand */}
@@ -24,25 +25,35 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPl
 
       {/* Primary Nav */}
       <div className="bg-[#121212] rounded-2xl p-4 space-y-2">
-        <button 
+        <button
           onClick={() => setView('home')}
           className={`flex items-center gap-4 w-full p-2.5 rounded-xl transition-all ${currentView === 'home' ? 'text-white bg-white/5' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
         >
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.5 3.247a1 1 0 00-1 0L4 7.577V20h4.5v-6a1 1 0 011-1h5a1 1 0 011 1v6H20V7.577l-7.5-4.33z"/></svg>
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.5 3.247a1 1 0 00-1 0L4 7.577V20h4.5v-6a1 1 0 011-1h5a1 1 0 011 1v6H20V7.577l-7.5-4.33z" /></svg>
           <span className="font-black text-sm uppercase tracking-wider">Home</span>
         </button>
-        <button 
+        <button
           onClick={() => setView('search')}
           className={`flex items-center gap-4 w-full p-2.5 rounded-xl transition-all ${currentView === 'search' ? 'text-white bg-white/5' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           <span className="font-black text-sm uppercase tracking-wider">Search</span>
         </button>
+        <button
+          onClick={() => setView('liked')}
+          className={`flex items-center gap-4 w-full p-2.5 rounded-xl transition-all ${currentView === 'liked' ? 'text-pink-400 bg-pink-500/10' : 'text-gray-400 hover:text-pink-400 hover:bg-pink-500/5'}`}
+        >
+          <svg className="w-6 h-6" fill={currentView === 'liked' ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+          <span className="font-black text-sm uppercase tracking-wider flex-1 text-left">Liked Songs</span>
+          {likedCount > 0 && (
+            <span className="bg-pink-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full">{likedCount}</span>
+          )}
+        </button>
       </div>
 
       {/* Actions */}
       <div className="bg-[#121212] rounded-2xl p-4 space-y-2">
-        <button 
+        <button
           onClick={onCreatePlaylist}
           className="flex items-center gap-4 w-full p-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all group"
         >
@@ -51,7 +62,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPl
           </div>
           <span className="font-black text-sm uppercase tracking-wider">Create Playlist</span>
         </button>
-        <button 
+        <button
           onClick={onUploadClick}
           className="flex items-center gap-4 w-full p-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all group"
         >
@@ -65,7 +76,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPl
       {/* Library Scroll */}
       <div className="flex-1 bg-[#121212] rounded-2xl flex flex-col overflow-hidden">
         <div className="p-5 flex items-center justify-between">
-          <button 
+          <button
             onClick={() => setView('library')}
             className={`flex items-center gap-3 transition ${currentView === 'library' ? 'text-white' : 'text-gray-400 hover:text-white'}`}
           >
@@ -79,7 +90,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPl
             <div className="mx-2 p-6 bg-white/5 rounded-2xl text-center border border-white/5">
               <p className="text-sm font-black text-white mb-1">Your library is empty</p>
               <p className="text-[11px] text-gray-500 mb-5 leading-relaxed">Start creating your playlists and we will keep them here.</p>
-              <button 
+              <button
                 onClick={onCreatePlaylist}
                 className="bg-white text-black text-[11px] font-black px-6 py-2 rounded-full transform transition hover:scale-105"
               >
@@ -88,7 +99,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPl
             </div>
           ) : (
             playlists.map(p => (
-              <button 
+              <button
                 key={p.id}
                 onClick={() => onPlaylistSelect(p)}
                 className="flex items-center gap-3 w-full p-2.5 hover:bg-white/5 rounded-xl transition group"
@@ -96,7 +107,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPl
                 <div className="relative group/cover">
                   <img src={p.coverUrl} className="w-14 h-14 rounded-lg shadow-xl object-cover" alt={p.name} />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/cover:opacity-100 flex items-center justify-center rounded-lg transition-opacity">
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M7 6v12l10-6z"/></svg>
+                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M7 6v12l10-6z" /></svg>
                   </div>
                 </div>
                 <div className="text-left overflow-hidden">

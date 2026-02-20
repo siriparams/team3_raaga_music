@@ -21,6 +21,7 @@ const App: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [customSongs, setCustomSongs] = useState<Song[]>([]);
+  const [likedSongIds, setLikedSongIds] = useState<string[]>([]);
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -40,6 +41,10 @@ const App: React.FC = () => {
     const storedSongs = localStorage.getItem('raaga_custom_songs');
     if (storedSongs) {
       setCustomSongs(JSON.parse(storedSongs));
+    }
+    const storedLiked = localStorage.getItem('raaga_liked_songs');
+    if (storedLiked) {
+      setLikedSongIds(JSON.parse(storedLiked));
     }
   }, []);
 
@@ -61,6 +66,15 @@ const App: React.FC = () => {
     localStorage.setItem('raaga_custom_songs', JSON.stringify(updated));
     setIsUploadModalOpen(false);
     alert(`${song.name} uploaded successfully!`);
+  };
+
+  const handleToggleLike = (song: Song) => {
+    const isLiked = likedSongIds.includes(song.id);
+    const updated = isLiked
+      ? likedSongIds.filter(id => id !== song.id)
+      : [...likedSongIds, song.id];
+    setLikedSongIds(updated);
+    localStorage.setItem('raaga_liked_songs', JSON.stringify(updated));
   };
 
   const handleCreatePlaylist = () => {
@@ -108,7 +122,7 @@ const App: React.FC = () => {
     };
     setCurrentUser(updatedUser);
     localStorage.setItem('raaga_user', JSON.stringify(updatedUser));
-    
+
     // Simulate download
     const link = document.createElement('a');
     link.href = song.audioUrl;
@@ -122,9 +136,9 @@ const App: React.FC = () => {
   const filteredSongs = useMemo(() => {
     if (!searchQuery) return allSongs;
     const query = searchQuery.toLowerCase();
-    return allSongs.filter(s => 
-      s.name.toLowerCase().includes(query) || 
-      s.singer.toLowerCase().includes(query) || 
+    return allSongs.filter(s =>
+      s.name.toLowerCase().includes(query) ||
+      s.singer.toLowerCase().includes(query) ||
       s.movieName.toLowerCase().includes(query) ||
       s.language.toLowerCase().includes(query)
     );
@@ -132,9 +146,9 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen w-full bg-black overflow-hidden font-sans select-none">
-      <Sidebar 
-        currentView={currentView} 
-        setView={setCurrentView} 
+      <Sidebar
+        currentView={currentView}
+        setView={setCurrentView}
         playlists={playlists}
         onPlaylistSelect={(p) => {
           setSelectedPlaylist(p);
@@ -142,47 +156,48 @@ const App: React.FC = () => {
         }}
         onCreatePlaylist={handleCreatePlaylist}
         onUploadClick={() => {
-          if(!currentUser) { setIsAuthModalOpen(true); return; }
+          if (!currentUser) { setIsAuthModalOpen(true); return; }
           setIsUploadModalOpen(true);
         }}
+        likedCount={likedSongIds.length}
       />
-      
+
       <div className="flex-1 flex flex-col relative overflow-hidden bg-gradient-to-b from-[#1a1a1a] to-black">
         {/* Header / Navbar */}
         <header className="h-16 flex items-center justify-between px-8 bg-black/40 backdrop-blur-xl sticky top-0 z-10 border-b border-white/5">
           <div className="flex items-center gap-4">
-             <div className="flex items-center gap-2">
-               <button onClick={() => window.history.back()} className="p-2 bg-black/60 rounded-full hover:bg-black/80 transition text-white">
-                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
-               </button>
-               <button onClick={() => window.history.forward()} className="p-2 bg-black/60 rounded-full hover:bg-black/80 transition text-white">
-                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
-               </button>
-             </div>
-             {currentView === 'search' && (
-               <div className="relative ml-4">
-                 <input 
-                   type="text" 
-                   placeholder="Search songs, artists, languages..." 
-                   className="w-[400px] bg-white/10 hover:bg-white/15 border border-transparent focus:border-white/20 outline-none rounded-full py-2.5 px-12 text-sm focus:ring-1 focus:ring-green-500 transition-all text-white"
-                   value={searchQuery}
-                   onChange={(e) => setSearchQuery(e.target.value)}
-                 />
-                 <svg className="w-5 h-5 absolute left-4 top-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-               </div>
-             )}
+            <div className="flex items-center gap-2">
+              <button onClick={() => window.history.back()} className="p-2 bg-black/60 rounded-full hover:bg-black/80 transition text-white">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
+              </button>
+              <button onClick={() => window.history.forward()} className="p-2 bg-black/60 rounded-full hover:bg-black/80 transition text-white">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
+              </button>
+            </div>
+            {currentView === 'search' && (
+              <div className="relative ml-4">
+                <input
+                  type="text"
+                  placeholder="Search songs, artists, languages..."
+                  className="w-[400px] bg-white/10 hover:bg-white/15 border border-transparent focus:border-white/20 outline-none rounded-full py-2.5 px-12 text-sm focus:ring-1 focus:ring-green-500 transition-all text-white"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <svg className="w-5 h-5 absolute left-4 top-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-6">
             {!currentUser ? (
               <>
-                <button 
+                <button
                   onClick={() => { setAuthType('signup'); setIsAuthModalOpen(true); }}
                   className="text-gray-400 font-bold hover:text-white transition"
                 >
                   Sign up
                 </button>
-                <button 
+                <button
                   onClick={() => { setAuthType('login'); setIsAuthModalOpen(true); }}
                   className="bg-white text-black font-bold py-2.5 px-10 rounded-full hover:scale-105 transition active:scale-95 shadow-lg"
                 >
@@ -191,7 +206,7 @@ const App: React.FC = () => {
               </>
             ) : (
               <div className="flex items-center gap-6">
-                <button 
+                <button
                   onClick={() => setIsProModalOpen(true)}
                   className={`px-5 py-2 rounded-full text-xs font-black tracking-widest border transition-all transform hover:scale-105 ${currentUser.isPro ? 'border-green-500 text-green-500 bg-green-500/10' : 'border-white text-white hover:bg-white/10'}`}
                 >
@@ -213,7 +228,7 @@ const App: React.FC = () => {
 
         {/* Dynamic Content */}
         <main className="flex-1 overflow-y-auto px-10 pb-40 pt-8 scroll-smooth">
-          <MainView 
+          <MainView
             view={currentView}
             searchSongs={filteredSongs}
             activeSong={activeSong}
@@ -221,46 +236,50 @@ const App: React.FC = () => {
             onDownload={handleDownload}
             playlist={selectedPlaylist}
             allSongs={allSongs}
+            likedSongIds={likedSongIds}
+            onToggleLike={handleToggleLike}
           />
         </main>
       </div>
 
       {/* Music Player */}
       {activeSong && (
-        <Player 
-          song={activeSong} 
-          isPlaying={isPlaying} 
+        <Player
+          song={activeSong}
+          isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
+          isLiked={likedSongIds.includes(activeSong.id)}
+          onToggleLike={handleToggleLike}
           onNext={() => {
             const idx = allSongs.findIndex(s => s.id === activeSong.id);
-            if (idx < allSongs.length - 1) setActiveSong(allSongs[idx+1]);
+            if (idx < allSongs.length - 1) setActiveSong(allSongs[idx + 1]);
           }}
           onPrev={() => {
             const idx = allSongs.findIndex(s => s.id === activeSong.id);
-            if (idx > 0) setActiveSong(allSongs[idx-1]);
+            if (idx > 0) setActiveSong(allSongs[idx - 1]);
           }}
         />
       )}
 
       {/* Modals */}
       {isAuthModalOpen && (
-        <AuthModal 
-          type={authType} 
-          onClose={() => setIsAuthModalOpen(false)} 
+        <AuthModal
+          type={authType}
+          onClose={() => setIsAuthModalOpen(false)}
           onAuthSuccess={handleLogin}
           setType={setAuthType}
         />
       )}
       {isUploadModalOpen && (
-        <UploadModal 
-          onClose={() => setIsUploadModalOpen(false)} 
-          onUpload={handleUploadSong} 
+        <UploadModal
+          onClose={() => setIsUploadModalOpen(false)}
+          onUpload={handleUploadSong}
         />
       )}
       {isProModalOpen && (
-        <ProModal 
-          onClose={() => setIsProModalOpen(false)} 
-          onSubscribe={handleSubscribePro} 
+        <ProModal
+          onClose={() => setIsProModalOpen(false)}
+          onSubscribe={handleSubscribePro}
         />
       )}
     </div>

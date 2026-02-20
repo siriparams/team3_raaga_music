@@ -33,4 +33,4 @@ export interface Playlist {
   coverUrl: string;
 }
 
-export type ViewType = 'home' | 'search' | 'library' | 'playlist-detail' | 'profile';
+export type ViewType = 'home' | 'search' | 'library' | 'playlist-detail' | 'profile' | 'liked';
