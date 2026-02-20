@@ -1,4 +1,3 @@
-
 import { Song } from './types';
 
 export const MOCK_SONGS: Song[] = [
@@ -11,9 +10,8 @@ export const MOCK_SONGS: Song[] = [
     duration: 210,
     language: 'Kannada',
     genre: 'Romance',
-    // FIXED: Direct link to the image file
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/9/91/Kirik_Party_Poster.jpg',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    coverUrl: 'https://gaana.com/lyrics/belageddu',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     replays: 1200
   },
   {
@@ -25,7 +23,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 195,
     language: 'Telugu',
     genre: 'Dance',
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/c/c5/Butta_Bomma_Song_Poster.jpg',
+    coverUrl: 'https://cloudtechservices.com/?e=53391685041930',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     replays: 5000
   },
@@ -38,7 +36,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 200,
     language: 'English',
     genre: 'Synthwave',
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/e/e6/The_Weeknd_-_Blinding_Lights.png',
+    coverUrl: 'https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
     replays: 1000000
   },
@@ -51,7 +49,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 280,
     language: 'Tamil',
     genre: 'Folk-Pop',
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/c/c5/Arabic_Kuthu_poster.jpg',
+    coverUrl: 'https://en.wikipedia.org/wiki/Arabic_Kuthu',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
     replays: 3500
   },
@@ -64,7 +62,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 310,
     language: 'Malayalam',
     genre: 'Melody',
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/1/13/Premam_film_poster.jpg',
+    coverUrl: 'https://open.spotify.com/track/7MOHpwP0pcGOZ3JqN7UlCm',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
     replays: 8900
   },
@@ -77,7 +75,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 238,
     language: 'English',
     genre: 'Indie Pop',
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/b/b0/Glass_Animals_-_Heat_Waves.png',
+    coverUrl: 'https://en.wikipedia.org/wiki/Heat_Waves',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
     replays: 150000
   }
