@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       host: '0.0.0.0',
-      allowedHosts: ['team3-raaga-music.onrender.com', 'localhost'],
+      allowedHosts: ['team3-raaga-music.onrender.com', 'localhost', 'eosinlike-semiseriously-jamal.ngrok-free.dev'],
     },
     plugins: [react()],
     define: {
