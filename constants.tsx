@@ -11,8 +11,9 @@ export const MOCK_SONGS: Song[] = [
     duration: 210,
     language: 'Kannada',
     genre: 'Romance',
-    coverUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&auto=format&fit=crop&q=60',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+    // FIXED: Direct link to the image file
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/9/91/Kirik_Party_Poster.jpg',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     replays: 1200
   },
   {
@@ -24,7 +25,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 195,
     language: 'Telugu',
     genre: 'Dance',
-    coverUrl: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=500&auto=format&fit=crop&q=60',
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/c/c5/Butta_Bomma_Song_Poster.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     replays: 5000
   },
@@ -37,7 +38,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 200,
     language: 'English',
     genre: 'Synthwave',
-    coverUrl: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=500&auto=format&fit=crop&q=60',
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/e/e6/The_Weeknd_-_Blinding_Lights.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
     replays: 1000000
   },
@@ -50,7 +51,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 280,
     language: 'Tamil',
     genre: 'Folk-Pop',
-    coverUrl: 'https://images.unsplash.com/photo-1514525253361-bee8a19740c1?w=500&auto=format&fit=crop&q=60',
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/c/c5/Arabic_Kuthu_poster.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
     replays: 3500
   },
@@ -63,7 +64,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 310,
     language: 'Malayalam',
     genre: 'Melody',
-    coverUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&auto=format&fit=crop&q=60',
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/1/13/Premam_film_poster.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
     replays: 8900
   },
@@ -76,7 +77,7 @@ export const MOCK_SONGS: Song[] = [
     duration: 238,
     language: 'English',
     genre: 'Indie Pop',
-    coverUrl: 'https://images.unsplash.com/photo-1459749411177-042180ce673c?w=500&auto=format&fit=crop&q=60',
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/b/b0/Glass_Animals_-_Heat_Waves.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
     replays: 150000
   }
