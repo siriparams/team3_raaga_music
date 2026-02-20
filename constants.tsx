@@ -10,8 +10,8 @@ export const MOCK_SONGS: Song[] = [
     duration: 210,
     language: 'Kannada',
     genre: 'Romance',
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/5/5d/Kirik_Party_Poster.jpg',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+    coverUrl: 'https://res.cloudinary.com/driumz9xo/image/upload/v1771579614/p4ynxrfrcawj00wogcqa.jpg',
+    audioUrl: 'https://res.cloudinary.com/driumz9xo/video/upload/v1771580344/fpq5xcaojrugze1zvwgm.mp3',
     replays: 1200
   },
   {
@@ -23,8 +23,8 @@ export const MOCK_SONGS: Song[] = [
     duration: 195,
     language: 'Telugu',
     genre: 'Dance',
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Butta_Bomma.jpg',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    coverUrl: 'https://res.cloudinary.com/driumz9xo/image/upload/v1771579615/ihmvyw6wizl9gganucsy.jpg',
+    audioUrl: 'https://res.cloudinary.com/driumz9xo/video/upload/v1771580347/tu1euy8kiymwythen86c.mp3',
     replays: 5000
   },
   {
@@ -37,7 +37,7 @@ export const MOCK_SONGS: Song[] = [
     language: 'English',
     genre: 'Synthwave',
     coverUrl: 'https://upload.wikimedia.org/wikipedia/en/c/c1/The_Weeknd_-_After_Hours.png',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+    audioUrl: 'https://res.cloudinary.com/driumz9xo/video/upload/v1771580346/trz4fwg9mjmib2rhuhyg.mp3',
     replays: 1000000
   },
   {
@@ -49,8 +49,8 @@ export const MOCK_SONGS: Song[] = [
     duration: 280,
     language: 'Tamil',
     genre: 'Folk-Pop',
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/1/12/Beast_Tamil_film.jpg',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+    coverUrl: 'https://res.cloudinary.com/driumz9xo/image/upload/v1771579616/iib6sj9ax17r1wxpaevu.jpg',
+    audioUrl: 'https://res.cloudinary.com/driumz9xo/video/upload/v1771580342/wrncynt6kabcspit78bb.mp3',
     replays: 3500
   },
   {
@@ -62,8 +62,8 @@ export const MOCK_SONGS: Song[] = [
     duration: 310,
     language: 'Malayalam',
     genre: 'Melody',
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/5/5e/Premam_film_poster.jpg',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+    coverUrl: 'https://res.cloudinary.com/driumz9xo/image/upload/v1771579613/b3twzsr9rrdrvaokhgmf.jpg',
+    audioUrl: 'https://res.cloudinary.com/driumz9xo/video/upload/v1771580350/qeealwmfvxd1sw6wlw3s.mp3',
     replays: 8900
   },
   {
@@ -75,8 +75,8 @@ export const MOCK_SONGS: Song[] = [
     duration: 238,
     language: 'English',
     genre: 'Indie Pop',
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/en/2/29/Glass_Animals_-_Dreamland.png',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
+    coverUrl: 'https://res.cloudinary.com/driumz9xo/image/upload/v1771579616/xce3kssxehtbkngphkeu.png',
+    audioUrl: 'https://res.cloudinary.com/driumz9xo/video/upload/v1771580349/mm8a2smhpif2oobv5ey8.mp3',
     replays: 150000
   }
 ];
