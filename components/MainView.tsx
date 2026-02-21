@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ViewType, Song, Playlist } from '../types';
 
 interface MainViewProps {
@@ -12,9 +12,62 @@ interface MainViewProps {
   allSongs: Song[];
   likedSongIds: string[];
   onToggleLike: (song: Song) => void;
+  playlists: Playlist[];
+  onAddToPlaylist: (songId: string, playlistId: string) => void;
 }
 
-const MainView: React.FC<MainViewProps> = ({ view, searchSongs, onPlay, onDownload, activeSong, playlist, allSongs, likedSongIds, onToggleLike }) => {
+// Small floating playlist picker shown on "+ Add to playlist" click
+const PlaylistPicker: React.FC<{
+  song: Song;
+  playlists: Playlist[];
+  onAdd: (songId: string, playlistId: string) => void;
+  onClose: () => void;
+}> = ({ song, playlists, onAdd, onClose }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) onClose();
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [onClose]);
+
+  return (
+    <div
+      ref={ref}
+      className="absolute z-50 right-0 top-8 w-52 bg-[#282828] border border-white/10 rounded-xl shadow-2xl overflow-hidden"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 px-4 pt-3 pb-1">Add to playlist</p>
+      {playlists.length === 0 ? (
+        <p className="text-gray-500 text-xs px-4 pb-3">No playlists yet</p>
+      ) : (
+        <div className="py-1">
+          {playlists.map((p) => {
+            const already = p.songIds.includes(song.id);
+            return (
+              <button
+                key={p.id}
+                onClick={() => { if (!already) { onAdd(song.id, p.id); onClose(); } }}
+                className={`w-full text-left px-4 py-2.5 text-sm flex items-center justify-between gap-2 transition-colors ${already ? 'text-green-400 cursor-default' : 'text-white hover:bg-white/10'
+                  }`}
+              >
+                <span className="truncate">{p.name}</span>
+                {already && (
+                  <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const MainView: React.FC<MainViewProps> = ({ view, searchSongs, onPlay, onDownload, activeSong, playlist, allSongs, likedSongIds, onToggleLike, playlists, onAddToPlaylist }) => {
   const renderHome = () => {
     const languages = [...new Set(allSongs.map(s => s.language))];
 
@@ -27,7 +80,7 @@ const MainView: React.FC<MainViewProps> = ({ view, searchSongs, onPlay, onDownlo
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
             {allSongs.slice(0, 6).map(song => (
-              <SongCard key={song.id} song={song} onPlay={onPlay} isActive={activeSong?.id === song.id} isLiked={likedSongIds.includes(song.id)} onToggleLike={onToggleLike} />
+              <SongCard key={song.id} song={song} onPlay={onPlay} isActive={activeSong?.id === song.id} isLiked={likedSongIds.includes(song.id)} onToggleLike={onToggleLike} playlists={playlists} onAddToPlaylist={onAddToPlaylist} />
             ))}
           </div>
         </section>
@@ -39,7 +92,7 @@ const MainView: React.FC<MainViewProps> = ({ view, searchSongs, onPlay, onDownlo
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
               {allSongs.filter(s => s.language === lang).slice(0, 6).map(song => (
-                <SongCard key={song.id} song={song} onPlay={onPlay} isActive={activeSong?.id === song.id} isLiked={likedSongIds.includes(song.id)} onToggleLike={onToggleLike} />
+                <SongCard key={song.id} song={song} onPlay={onPlay} isActive={activeSong?.id === song.id} isLiked={likedSongIds.includes(song.id)} onToggleLike={onToggleLike} playlists={playlists} onAddToPlaylist={onAddToPlaylist} />
               ))}
             </div>
           </section>
@@ -57,7 +110,7 @@ const MainView: React.FC<MainViewProps> = ({ view, searchSongs, onPlay, onDownlo
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
         {searchSongs.length > 0 ? (
           searchSongs.map(song => (
-            <SongCard key={song.id} song={song} onPlay={onPlay} isActive={activeSong?.id === song.id} isLiked={likedSongIds.includes(song.id)} onToggleLike={onToggleLike} />
+            <SongCard key={song.id} song={song} onPlay={onPlay} isActive={activeSong?.id === song.id} isLiked={likedSongIds.includes(song.id)} onToggleLike={onToggleLike} playlists={playlists} onAddToPlaylist={onAddToPlaylist} />
           ))
         ) : (
           <div className="col-span-full py-20 text-center">
@@ -125,7 +178,8 @@ const MainView: React.FC<MainViewProps> = ({ view, searchSongs, onPlay, onDownlo
                   <div className="col-span-2 flex items-center">
                     <span className="px-2 py-0.5 bg-white/5 rounded-md text-[9px] font-black uppercase group-hover:bg-white/20 transition-colors">{song.language}</span>
                   </div>
-                  <div className="col-span-1 flex items-center justify-end">
+                  <div className="col-span-1 flex items-center justify-end gap-1">
+                    <AddToPlaylistButton song={song} playlists={playlists} onAddToPlaylist={onAddToPlaylist} />
                     <button
                       onClick={(e) => { e.stopPropagation(); onToggleLike(song); }}
                       className="p-2 hover:bg-pink-500/20 rounded-full transition-all active:scale-90 text-pink-500"
@@ -239,42 +293,97 @@ interface SongCardProps {
   isActive: boolean;
   isLiked: boolean;
   onToggleLike: (s: Song) => void;
+  playlists: Playlist[];
+  onAddToPlaylist: (songId: string, playlistId: string) => void;
 }
 
-const SongCard: React.FC<SongCardProps> = ({ song, onPlay, isActive, isLiked, onToggleLike }) => (
-  <div
-    onClick={() => onPlay(song)}
-    className={`p-5 bg-[#121212]/50 hover:bg-[#1e1e1e] rounded-2xl transition-all cursor-pointer group shadow-2xl border border-white/5 hover:border-white/10 ${isActive ? 'bg-[#1e1e1e] ring-1 ring-green-500/50' : ''}`}
-  >
-    <div className="relative aspect-square mb-5 shadow-2xl perspective-1000">
-      <img src={song.coverUrl} className="w-full h-full object-cover rounded-xl shadow-inner group-hover:scale-105 transition-transform duration-500" alt={song.name} />
-      <div className={`absolute bottom-3 right-3 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(34,197,94,0.4)] transition-all duration-300 transform translate-y-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110 active:scale-95 z-10 ${isActive ? 'opacity-100 translate-y-0' : ''}`}>
-        <svg className="w-7 h-7 text-black fill-current" viewBox="0 0 24 24"><path d="M7 6v12l10-6z" /></svg>
-      </div>
-      {/* Like button */}
+// Inline add-to-playlist button for song rows
+const AddToPlaylistButton: React.FC<{
+  song: Song;
+  playlists: Playlist[];
+  onAddToPlaylist: (songId: string, playlistId: string) => void;
+}> = ({ song, playlists, onAddToPlaylist }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="relative" onClick={(e) => e.stopPropagation()}>
       <button
-        onClick={(e) => { e.stopPropagation(); onToggleLike(song); }}
-        className={`absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center transition-all active:scale-90 z-10 ${isLiked ? 'bg-pink-500/90 text-white opacity-100' : 'bg-black/50 text-gray-400 opacity-0 group-hover:opacity-100 hover:text-pink-400'}`}
-        title={isLiked ? 'Unlike' : 'Like'}
+        onClick={() => setOpen(v => !v)}
+        className="p-2 hover:bg-green-500/20 hover:text-green-400 text-gray-500 rounded-full transition-all active:scale-90"
+        title="Add to playlist"
       >
-        <svg className="w-4 h-4" fill={isLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
         </svg>
       </button>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 rounded-xl transition-opacity"></div>
+      {open && (
+        <PlaylistPicker
+          song={song}
+          playlists={playlists}
+          onAdd={onAddToPlaylist}
+          onClose={() => setOpen(false)}
+        />
+      )}
     </div>
-    <div className="space-y-1">
-      <h3 className="text-white font-black text-lg truncate tracking-tight">{song.name}</h3>
-      <p className="text-xs font-bold text-gray-500 truncate group-hover:text-gray-300 transition-colors uppercase tracking-wider">{song.singer}</p>
-    </div>
-    <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
-      <div className="flex flex-col">
-        <span className="text-[9px] font-black text-green-500 uppercase tracking-[0.1em]">{song.genre}</span>
-        <span className="text-[10px] font-bold text-gray-600 uppercase">{song.language}</span>
+  );
+};
+
+const SongCard: React.FC<SongCardProps> = ({ song, onPlay, isActive, isLiked, onToggleLike, playlists, onAddToPlaylist }) => {
+  const [pickerOpen, setPickerOpen] = useState(false);
+  return (
+    <div
+      onClick={() => onPlay(song)}
+      className={`p-5 bg-[#121212]/50 hover:bg-[#1e1e1e] rounded-2xl transition-all cursor-pointer group shadow-2xl border border-white/5 hover:border-white/10 ${isActive ? 'bg-[#1e1e1e] ring-1 ring-green-500/50' : ''}`}
+    >
+      <div className="relative aspect-square mb-5 shadow-2xl perspective-1000">
+        <img src={song.coverUrl} className="w-full h-full object-cover rounded-xl shadow-inner group-hover:scale-105 transition-transform duration-500" alt={song.name} />
+        <div className={`absolute bottom-3 right-3 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(34,197,94,0.4)] transition-all duration-300 transform translate-y-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 hover:scale-110 active:scale-95 z-10 ${isActive ? 'opacity-100 translate-y-0' : ''}`}>
+          <svg className="w-7 h-7 text-black fill-current" viewBox="0 0 24 24"><path d="M7 6v12l10-6z" /></svg>
+        </div>
+        {/* Like button */}
+        <button
+          onClick={(e) => { e.stopPropagation(); onToggleLike(song); }}
+          className={`absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center transition-all active:scale-90 z-10 ${isLiked ? 'bg-pink-500/90 text-white opacity-100' : 'bg-black/50 text-gray-400 opacity-0 group-hover:opacity-100 hover:text-pink-400'}`}
+          title={isLiked ? 'Unlike' : 'Like'}
+        >
+          <svg className="w-4 h-4" fill={isLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </button>
+        {/* Add to playlist button */}
+        <div className="absolute top-2 left-2 z-10" onClick={(e) => e.stopPropagation()}>
+          <button
+            onClick={() => setPickerOpen(v => !v)}
+            className={`w-8 h-8 rounded-full bg-black/50 flex items-center justify-center transition-all active:scale-90 text-gray-400 opacity-0 group-hover:opacity-100 hover:text-green-400 hover:bg-black/80`}
+            title="Add to playlist"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+            </svg>
+          </button>
+          {pickerOpen && (
+            <PlaylistPicker
+              song={song}
+              playlists={playlists}
+              onAdd={onAddToPlaylist}
+              onClose={() => setPickerOpen(false)}
+            />
+          )}
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 rounded-xl transition-opacity"></div>
       </div>
-      <span className="text-[10px] font-black text-gray-500 bg-white/5 px-2 py-0.5 rounded-md">{Math.floor(song.duration / 60)}:{(song.duration % 60).toString().padStart(2, '0')}</span>
+      <div className="space-y-1">
+        <h3 className="text-white font-black text-lg truncate tracking-tight">{song.name}</h3>
+        <p className="text-xs font-bold text-gray-500 truncate group-hover:text-gray-300 transition-colors uppercase tracking-wider">{song.singer}</p>
+      </div>
+      <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
+        <div className="flex flex-col">
+          <span className="text-[9px] font-black text-green-500 uppercase tracking-[0.1em]">{song.genre}</span>
+          <span className="text-[10px] font-bold text-gray-600 uppercase">{song.language}</span>
+        </div>
+        <span className="text-[10px] font-black text-gray-500 bg-white/5 px-2 py-0.5 rounded-md">{Math.floor(song.duration / 60)}:{(song.duration % 60).toString().padStart(2, '0')}</span>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default MainView;
