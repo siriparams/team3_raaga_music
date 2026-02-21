@@ -37,7 +37,7 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                 {/* Header */}
                 <div className="flex items-center justify-between px-8 pt-8 pb-4 border-b border-white/10">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(34,197,94,0.4)]">
+                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.4)]">
                             <span className="text-black font-black text-sm italic">R</span>
                         </div>
                         <div>
@@ -64,7 +64,7 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                                     type="button"
                                     onClick={() => setSelectedPlan(plan)}
                                     className={`rounded-2xl p-4 border text-left transition-all ${selectedPlan === plan
-                                            ? 'border-green-500 bg-green-500/10'
+                                            ? 'border-blue-500 bg-blue-500/10'
                                             : 'border-white/10 bg-white/5 hover:bg-white/10'
                                         }`}
                                 >
@@ -75,7 +75,7 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                                             <p className="text-gray-500 text-xs">{plans[plan].period}</p>
                                         </div>
                                         {plans[plan].savings && (
-                                            <span className="bg-green-500 text-black text-[10px] font-black px-2 py-0.5 rounded-full">
+                                            <span className="bg-blue-500 text-black text-[10px] font-black px-2 py-0.5 rounded-full">
                                                 {plans[plan].savings}
                                             </span>
                                         )}
@@ -95,7 +95,7 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                             'Priority customer support',
                         ].map((feature) => (
                             <div key={feature} className="flex items-center gap-2">
-                                <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <svg className="w-4 h-4 text-blue-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                 </svg>
                                 <span className="text-white text-sm">{feature}</span>
@@ -113,7 +113,7 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                                     type="button"
                                     onClick={() => setPaymentMethod(method)}
                                     className={`flex-1 py-2 rounded-xl border text-xs font-bold uppercase tracking-wide transition-all ${paymentMethod === method
-                                            ? 'border-green-500 bg-green-500/10 text-green-400'
+                                            ? 'border-blue-500 bg-blue-500/10 text-blue-400'
                                             : 'border-white/10 bg-white/5 text-gray-400 hover:bg-white/10'
                                         }`}
                                 >
@@ -133,11 +133,11 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                                         placeholder="yourname@upi"
                                         value={upiId}
                                         onChange={(e) => setUpiId(e.target.value)}
-                                        className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-green-500 transition placeholder-gray-600"
+                                        className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-blue-500 transition placeholder-gray-600"
                                     />
                                 </div>
                                 <div className="flex items-center gap-2 text-xs text-gray-500">
-                                    <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                                     </svg>
                                     Secured by 256-bit SSL encryption
@@ -160,7 +160,7 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                                             const val = e.target.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
                                             setCardNumber(val);
                                         }}
-                                        className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-green-500 transition placeholder-gray-600"
+                                        className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-blue-500 transition placeholder-gray-600"
                                     />
                                 </div>
                                 <div>
@@ -171,7 +171,7 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                                         placeholder="Full name"
                                         value={cardName}
                                         onChange={(e) => setCardName(e.target.value)}
-                                        className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-green-500 transition placeholder-gray-600"
+                                        className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-blue-500 transition placeholder-gray-600"
                                     />
                                 </div>
                                 <div className="grid grid-cols-2 gap-3">
@@ -188,7 +188,7 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                                                 if (val.length >= 2) val = val.slice(0, 2) + ' / ' + val.slice(2, 4);
                                                 setCardExpiry(val);
                                             }}
-                                            className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-green-500 transition placeholder-gray-600"
+                                            className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-blue-500 transition placeholder-gray-600"
                                         />
                                     </div>
                                     <div>
@@ -200,12 +200,12 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                                             maxLength={4}
                                             value={cardCvv}
                                             onChange={(e) => setCardCvv(e.target.value.replace(/\D/g, ''))}
-                                            className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-green-500 transition placeholder-gray-600"
+                                            className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-blue-500 transition placeholder-gray-600"
                                         />
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2 text-xs text-gray-500">
-                                    <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                                     </svg>
                                     Secured by 256-bit SSL encryption
@@ -222,14 +222,14 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                                         <button
                                             key={bank}
                                             type="button"
-                                            className="py-2.5 px-3 bg-white/5 border border-white/10 hover:border-green-500 hover:bg-green-500/10 rounded-xl text-white text-xs font-semibold transition-all text-left"
+                                            className="py-2.5 px-3 bg-white/5 border border-white/10 hover:border-blue-500 hover:bg-blue-500/10 rounded-xl text-white text-xs font-semibold transition-all text-left"
                                         >
                                             {bank}
                                         </button>
                                     ))}
                                 </div>
                                 <div className="flex items-center gap-2 text-xs text-gray-500 mt-2">
-                                    <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                                     </svg>
                                     Secured by 256-bit SSL encryption
@@ -250,7 +250,7 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                         </div>
                         <div className="flex justify-between text-white font-black text-lg pt-2 border-t border-white/10">
                             <span>Total Due Today</span>
-                            <span className="text-green-400">{selectedPlan === 'monthly' ? '₹116.82' : '₹942.82'}</span>
+                            <span className="text-blue-400">{selectedPlan === 'monthly' ? '₹116.82' : '₹942.82'}</span>
                         </div>
                     </div>
 
@@ -258,7 +258,7 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                     <button
                         type="submit"
                         disabled={isProcessing}
-                        className="w-full bg-green-500 hover:bg-green-400 disabled:opacity-70 disabled:cursor-not-allowed text-black font-black text-base py-4 rounded-full transition-all transform active:scale-95 shadow-[0_0_20px_rgba(34,197,94,0.3)] flex items-center justify-center gap-2"
+                        className="w-full bg-blue-500 hover:bg-blue-400 disabled:opacity-70 disabled:cursor-not-allowed text-black font-black text-base py-4 rounded-full transition-all transform active:scale-95 shadow-[0_0_20px_rgba(59,130,246,0.3)] flex items-center justify-center gap-2"
                     >
                         {isProcessing ? (
                             <>

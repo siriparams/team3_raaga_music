@@ -47,7 +47,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ onClose, onUpload }) => {
               <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Song Name</label>
               <input 
                 required
-                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-green-500 text-white transition"
+                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-blue-500 text-white transition"
                 placeholder="Enter song name"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -57,7 +57,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ onClose, onUpload }) => {
               <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Movie / Album</label>
               <input 
                 required
-                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-green-500 text-white transition"
+                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-blue-500 text-white transition"
                 placeholder="Enter movie name"
                 value={formData.movieName}
                 onChange={(e) => setFormData({...formData, movieName: e.target.value})}
@@ -67,7 +67,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ onClose, onUpload }) => {
               <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Singer</label>
               <input 
                 required
-                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-green-500 text-white transition"
+                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-blue-500 text-white transition"
                 placeholder="Enter singer name"
                 value={formData.singer}
                 onChange={(e) => setFormData({...formData, singer: e.target.value})}
@@ -76,7 +76,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ onClose, onUpload }) => {
             <div>
               <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Language</label>
               <select 
-                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-green-500 text-white transition"
+                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-blue-500 text-white transition"
                 value={formData.language}
                 onChange={(e) => setFormData({...formData, language: e.target.value as Language})}
               >
@@ -93,7 +93,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ onClose, onUpload }) => {
             <div>
               <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Composer</label>
               <input 
-                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-green-500 text-white transition"
+                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-blue-500 text-white transition"
                 placeholder="Enter composer"
                 value={formData.composer}
                 onChange={(e) => setFormData({...formData, composer: e.target.value})}
@@ -102,7 +102,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ onClose, onUpload }) => {
             <div>
               <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Genre</label>
               <input 
-                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-green-500 text-white transition"
+                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-blue-500 text-white transition"
                 placeholder="Pop, Jazz, Rock..."
                 value={formData.genre}
                 onChange={(e) => setFormData({...formData, genre: e.target.value})}
@@ -111,7 +111,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ onClose, onUpload }) => {
             <div>
               <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Cover Image URL</label>
               <input 
-                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-green-500 text-white transition"
+                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-blue-500 text-white transition"
                 placeholder="https://..."
                 value={formData.coverUrl}
                 onChange={(e) => setFormData({...formData, coverUrl: e.target.value})}
@@ -120,7 +120,7 @@ const UploadModal: React.FC<UploadModalProps> = ({ onClose, onUpload }) => {
             <div>
               <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Audio URL (.mp3)</label>
               <input 
-                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-green-500 text-white transition"
+                className="w-full bg-white/5 border border-white/10 rounded-xl p-3 outline-none focus:border-blue-500 text-white transition"
                 placeholder="https://..."
                 value={formData.audioUrl}
                 onChange={(e) => setFormData({...formData, audioUrl: e.target.value})}

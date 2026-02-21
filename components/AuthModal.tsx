@@ -55,7 +55,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ type, onClose, onAuthSuccess, set
               <input
                 type="text"
                 required
-                className="w-full bg-white/5 border border-white/20 rounded-lg p-3 outline-none focus:border-green-500 transition"
+                className="w-full bg-white/5 border border-white/20 rounded-lg p-3 outline-none focus:border-blue-500 transition"
                 placeholder="What's your name?"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -67,7 +67,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ type, onClose, onAuthSuccess, set
             <input
               type="email"
               required
-              className="w-full bg-white/5 border border-white/20 rounded-lg p-3 outline-none focus:border-green-500 transition"
+              className="w-full bg-white/5 border border-white/20 rounded-lg p-3 outline-none focus:border-blue-500 transition"
               placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -78,7 +78,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ type, onClose, onAuthSuccess, set
             <input
               type="password"
               required
-              className="w-full bg-white/5 border border-white/20 rounded-lg p-3 outline-none focus:border-green-500 transition"
+              className="w-full bg-white/5 border border-white/20 rounded-lg p-3 outline-none focus:border-blue-500 transition"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -87,7 +87,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ type, onClose, onAuthSuccess, set
 
           <button
             type="submit"
-            className="w-full bg-green-500 hover:bg-green-400 text-black font-bold py-3 rounded-full mt-4 transition transform active:scale-95"
+            className="w-full bg-blue-500 hover:bg-blue-400 text-black font-bold py-3 rounded-full mt-4 transition transform active:scale-95"
           >
             {type === 'login' ? 'Log In' : 'Sign Up'}
           </button>

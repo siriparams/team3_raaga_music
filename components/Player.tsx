@@ -105,7 +105,7 @@ const Player: React.FC<PlayerProps> = ({ song, isPlaying, setIsPlaying, onNext, 
             max={song.duration}
             value={currentTime}
             onChange={handleSeek}
-            className="flex-1 h-1 bg-white/20 rounded-full appearance-none cursor-pointer accent-green-500 hover:accent-green-400 transition"
+            className="flex-1 h-1 bg-white/20 rounded-full appearance-none cursor-pointer accent-blue-500 hover:accent-blue-400 transition"
           />
           <span className="text-[10px] text-gray-400 w-10">{formatTime(song.duration)}</span>
         </div>

@@ -210,7 +210,7 @@ const App: React.FC = () => {
                 <input
                   type="text"
                   placeholder="Search songs, artists, languages..."
-                  className="w-[400px] bg-white/10 hover:bg-white/15 border border-transparent focus:border-white/20 outline-none rounded-full py-2.5 px-12 text-sm focus:ring-1 focus:ring-green-500 transition-all text-white"
+                  className="w-[400px] bg-white/10 hover:bg-white/15 border border-transparent focus:border-white/20 outline-none rounded-full py-2.5 px-12 text-sm focus:ring-1 focus:ring-blue-500 transition-all text-white"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -239,12 +239,12 @@ const App: React.FC = () => {
               <div className="flex items-center gap-6">
                 <button
                   onClick={() => setIsProModalOpen(true)}
-                  className={`px-5 py-2 rounded-full text-xs font-black tracking-widest border transition-all transform hover:scale-105 ${currentUser.isPro ? 'border-green-500 text-green-500 bg-green-500/10' : 'border-white text-white hover:bg-white/10'}`}
+                  className={`px-5 py-2 rounded-full text-xs font-black tracking-widest border transition-all transform hover:scale-105 ${currentUser.isPro ? 'border-blue-500 text-blue-500 bg-blue-500/10' : 'border-white text-white hover:bg-white/10'}`}
                 >
                   {currentUser.isPro ? 'RAAGA PRO' : 'UPGRADE'}
                 </button>
                 <div className="flex items-center gap-3 bg-white/5 hover:bg-white/10 p-1.5 pr-4 rounded-full cursor-pointer transition border border-white/5">
-                  <div className="w-8 h-8 bg-gradient-to-tr from-green-400 to-emerald-600 rounded-full flex items-center justify-center font-black text-sm text-black shadow-inner">
+                  <div className="w-8 h-8 bg-gradient-to-tr from-blue-400 to-blue-600 rounded-full flex items-center justify-center font-black text-sm text-black shadow-inner">
                     {currentUser.username[0].toUpperCase()}
                   </div>
                   <div className="flex flex-col">

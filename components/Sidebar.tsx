@@ -57,12 +57,12 @@ const PlaylistContextMenu: React.FC<{
             value={nameValue}
             onChange={(e) => setNameValue(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter') submitRename(); if (e.key === 'Escape') onClose(); }}
-            className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-green-500 transition mb-2"
+            className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500 transition mb-2"
           />
           <div className="flex gap-2">
             <button
               onClick={submitRename}
-              className="flex-1 bg-green-500 hover:bg-green-400 text-black font-black text-xs py-1.5 rounded-lg transition"
+              className="flex-1 bg-blue-500 hover:bg-blue-400 text-black font-black text-xs py-1.5 rounded-lg transition"
             >
               Save
             </button>
@@ -107,7 +107,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPl
     <div className="w-72 bg-black flex flex-col gap-3 p-3 h-full border-right border-white/5">
       {/* Brand */}
       <div className="px-4 py-4 flex items-center gap-3">
-        <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center rotate-3 shadow-[0_0_20px_rgba(34,197,94,0.3)]">
+        <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center rotate-3 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
           <span className="text-black font-black text-xl italic leading-none">R</span>
         </div>
         <span className="text-2xl font-black text-white italic tracking-tighter">RAAGA</span>
@@ -156,8 +156,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPl
           onClick={onUploadClick}
           className="flex items-center gap-4 w-full p-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all group"
         >
-          <div className="w-6 h-6 bg-green-500/20 rounded group-hover:bg-green-500 flex items-center justify-center transition-colors">
-            <svg className="w-4 h-4 text-green-500 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+          <div className="w-6 h-6 bg-blue-500/20 rounded group-hover:bg-blue-500 flex items-center justify-center transition-colors">
+            <svg className="w-4 h-4 text-blue-500 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
           </div>
           <span className="font-black text-sm uppercase tracking-wider">Upload Song</span>
         </button>
