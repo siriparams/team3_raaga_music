@@ -195,7 +195,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPl
                   className="flex items-center gap-3 w-full p-2.5 hover:bg-white/5 rounded-xl transition pr-10"
                 >
                   <div className="relative group/cover flex-shrink-0">
-                    <img src={p.coverUrl} className="w-14 h-14 rounded-lg shadow-xl object-cover" alt={p.name} />
+                    <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-blue-600 to-blue-900 flex items-center justify-center shadow-xl">
+                      <span className="text-white font-black italic text-2xl leading-none">R</span>
+                    </div>
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/cover:opacity-100 flex items-center justify-center rounded-lg transition-opacity">
                       <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M7 6v12l10-6z" /></svg>
                     </div>

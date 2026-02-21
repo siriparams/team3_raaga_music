@@ -204,7 +204,9 @@ const MainView: React.FC<MainViewProps> = ({ view, searchSongs, onPlay, onDownlo
       <div className="animate-fadeIn">
         <div className="flex items-end gap-10 mb-12">
           <div className="relative group">
-            <img src={playlist.coverUrl} className="w-64 h-64 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-2xl object-cover transform transition group-hover:scale-105" alt={playlist.name} />
+            <div className="w-64 h-64 bg-gradient-to-br from-blue-600 to-blue-900 rounded-2xl flex items-center justify-center shadow-[0_20px_50px_rgba(59,130,246,0.4)] transform transition group-hover:scale-105">
+              <span className="text-white font-black italic" style={{ fontSize: '7rem', lineHeight: 1 }}>R</span>
+            </div>
             <div className="absolute inset-0 bg-black/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <button className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center shadow-2xl transform scale-90 group-hover:scale-100 transition-transform">
                 <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M7 6v12l10-6z" /></svg>
