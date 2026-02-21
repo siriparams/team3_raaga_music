@@ -32,7 +32,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ type, onClose, onAuthSuccess, set
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fadeIn">
       <div className="bg-[#121212] w-full max-w-md rounded-2xl p-8 shadow-2xl relative border border-white/5">
-        <button 
+        <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white transition"
         >
@@ -41,7 +41,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ type, onClose, onAuthSuccess, set
 
         <div className="flex flex-col items-center mb-8">
           <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-4">
-             <span className="text-black font-black text-xl italic">R</span>
+            <span className="text-black font-black text-xl italic">R</span>
           </div>
           <h2 className="text-3xl font-black text-white">
             {type === 'login' ? 'Log in to RAAGA' : 'Sign up for RAAGA'}
@@ -52,8 +52,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ type, onClose, onAuthSuccess, set
           {type === 'signup' && (
             <div>
               <label className="block text-sm font-bold text-white mb-2">Username</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 required
                 className="w-full bg-white/5 border border-white/20 rounded-lg p-3 outline-none focus:border-green-500 transition"
                 placeholder="What's your name?"
@@ -64,8 +64,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ type, onClose, onAuthSuccess, set
           )}
           <div>
             <label className="block text-sm font-bold text-white mb-2">Email address</label>
-            <input 
-              type="email" 
+            <input
+              type="email"
               required
               className="w-full bg-white/5 border border-white/20 rounded-lg p-3 outline-none focus:border-green-500 transition"
               placeholder="Email address"
@@ -75,8 +75,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ type, onClose, onAuthSuccess, set
           </div>
           <div>
             <label className="block text-sm font-bold text-white mb-2">Password</label>
-            <input 
-              type="password" 
+            <input
+              type="password"
               required
               className="w-full bg-white/5 border border-white/20 rounded-lg p-3 outline-none focus:border-green-500 transition"
               placeholder="Password"
@@ -85,7 +85,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ type, onClose, onAuthSuccess, set
             />
           </div>
 
-          <button 
+          <button
             type="submit"
             className="w-full bg-green-500 hover:bg-green-400 text-black font-bold py-3 rounded-full mt-4 transition transform active:scale-95"
           >
@@ -96,7 +96,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ type, onClose, onAuthSuccess, set
         <div className="mt-8 pt-8 border-t border-white/10 text-center">
           <p className="text-gray-400 text-sm">
             {type === 'login' ? "Don't have an account?" : "Already have an account?"}
-            <button 
+            <button
               onClick={() => setType(type === 'login' ? 'signup' : 'login')}
               className="ml-2 text-white font-bold hover:underline"
             >
