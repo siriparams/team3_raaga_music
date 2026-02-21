@@ -91,7 +91,6 @@ const ProCheckoutModal: React.FC<ProCheckoutModalProps> = ({ onClose, onConfirm 
                         {[
                             'Unlimited song downloads',
                             'High Fidelity (HiFi) audio quality',
-                            'Ad-free listening experience',
                             'Offline mode access',
                             'Priority customer support',
                         ].map((feature) => (

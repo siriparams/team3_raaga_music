@@ -145,6 +145,7 @@ const MainView: React.FC<MainViewProps> = ({ view, searchSongs, onPlay, onDownlo
 
   const renderPlaylist = () => {
     if (!playlist) return <div>No playlist selected.</div>;
+    const playlistSongs = allSongs.filter(s => playlist.songIds.includes(s.id));
     return (
       <div className="animate-fadeIn">
         <div className="flex items-end gap-10 mb-12">
@@ -162,55 +163,63 @@ const MainView: React.FC<MainViewProps> = ({ view, searchSongs, onPlay, onDownlo
             <div className="flex items-center gap-2 text-sm">
               <span className="font-black text-white uppercase italic">Raaga Studio</span>
               <span className="text-gray-500 font-black">•</span>
-              <span className="text-gray-400 font-bold">{allSongs.length} songs</span>
-              <span className="text-gray-500 font-black">•</span>
-              <span className="text-gray-500">about 4 hr 20 min</span>
+              <span className="text-gray-400 font-bold">{playlistSongs.length} {playlistSongs.length === 1 ? 'song' : 'songs'}</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white/5 rounded-3xl overflow-hidden border border-white/5 backdrop-blur-sm">
-          <div className="grid grid-cols-12 gap-4 px-8 py-5 text-[10px] font-black uppercase tracking-widest text-gray-500 border-b border-white/5">
-            <div className="col-span-1">#</div>
-            <div className="col-span-5">Title / Artist</div>
-            <div className="col-span-3">Album</div>
-            <div className="col-span-2">Lang</div>
-            <div className="col-span-1 text-right">Action</div>
+        {playlistSongs.length === 0 ? (
+          <div className="py-20 text-center">
+            <svg className="w-20 h-20 text-gray-700 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+            </svg>
+            <p className="text-white font-black text-2xl mb-2">This playlist is empty</p>
+            <p className="text-gray-500 font-bold">Add songs to this playlist to see them here</p>
           </div>
-          <div className="py-4">
-            {allSongs.map((song, idx) => (
-              <div
-                key={song.id}
-                className={`grid grid-cols-12 gap-4 px-8 py-3 text-sm text-gray-400 hover:bg-white/10 rounded-xl group transition-all cursor-pointer items-center mx-2 ${activeSong?.id === song.id ? 'bg-white/10' : ''}`}
-                onClick={() => onPlay(song)}
-              >
-                <div className="col-span-1 flex items-center font-black">
-                  {activeSong?.id === song.id ? <span className="text-green-500 animate-pulse">▶</span> : idx + 1}
-                </div>
-                <div className="col-span-5 flex items-center gap-4">
-                  <img src={song.coverUrl} className="w-12 h-12 rounded-lg shadow-lg object-cover" alt={song.name} />
-                  <div className="overflow-hidden">
-                    <p className={`font-black text-base truncate ${activeSong?.id === song.id ? 'text-green-500' : 'text-white'}`}>{song.name}</p>
-                    <p className="text-xs font-bold opacity-60 group-hover:opacity-100 truncate">{song.singer} • {song.composer}</p>
+        ) : (
+          <div className="bg-white/5 rounded-3xl overflow-hidden border border-white/5 backdrop-blur-sm">
+            <div className="grid grid-cols-12 gap-4 px-8 py-5 text-[10px] font-black uppercase tracking-widest text-gray-500 border-b border-white/5">
+              <div className="col-span-1">#</div>
+              <div className="col-span-5">Title / Artist</div>
+              <div className="col-span-3">Album</div>
+              <div className="col-span-2">Lang</div>
+              <div className="col-span-1 text-right">Action</div>
+            </div>
+            <div className="py-4">
+              {playlistSongs.map((song, idx) => (
+                <div
+                  key={song.id}
+                  className={`grid grid-cols-12 gap-4 px-8 py-3 text-sm text-gray-400 hover:bg-white/10 rounded-xl group transition-all cursor-pointer items-center mx-2 ${activeSong?.id === song.id ? 'bg-white/10' : ''}`}
+                  onClick={() => onPlay(song)}
+                >
+                  <div className="col-span-1 flex items-center font-black">
+                    {activeSong?.id === song.id ? <span className="text-green-500 animate-pulse">▶</span> : idx + 1}
+                  </div>
+                  <div className="col-span-5 flex items-center gap-4">
+                    <img src={song.coverUrl} className="w-12 h-12 rounded-lg shadow-lg object-cover" alt={song.name} />
+                    <div className="overflow-hidden">
+                      <p className={`font-black text-base truncate ${activeSong?.id === song.id ? 'text-green-500' : 'text-white'}`}>{song.name}</p>
+                      <p className="text-xs font-bold opacity-60 group-hover:opacity-100 truncate">{song.singer} • {song.composer}</p>
+                    </div>
+                  </div>
+                  <div className="col-span-3 flex items-center font-bold text-xs truncate group-hover:text-white transition-colors">{song.movieName}</div>
+                  <div className="col-span-2 flex items-center">
+                    <span className="px-2 py-0.5 bg-white/5 rounded-md text-[9px] font-black uppercase group-hover:bg-white/20 transition-colors">{song.language}</span>
+                  </div>
+                  <div className="col-span-1 flex items-center justify-end">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onDownload(song); }}
+                      className="p-2 hover:bg-green-500 hover:text-black rounded-full transition-all active:scale-90"
+                      title="Download Song"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                    </button>
                   </div>
                 </div>
-                <div className="col-span-3 flex items-center font-bold text-xs truncate group-hover:text-white transition-colors">{song.movieName}</div>
-                <div className="col-span-2 flex items-center">
-                  <span className="px-2 py-0.5 bg-white/5 rounded-md text-[9px] font-black uppercase group-hover:bg-white/20 transition-colors">{song.language}</span>
-                </div>
-                <div className="col-span-1 flex items-center justify-end">
-                  <button
-                    onClick={(e) => { e.stopPropagation(); onDownload(song); }}
-                    className="p-2 hover:bg-green-500 hover:text-black rounded-full transition-all active:scale-90"
-                    title="Download Song"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   };
