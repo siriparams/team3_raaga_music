@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ViewType, Playlist } from '../types';
 
 interface SidebarProps {
@@ -10,9 +10,99 @@ interface SidebarProps {
   onCreatePlaylist: () => void;
   onUploadClick: () => void;
   likedCount: number;
+  onRenamePlaylist: (playlistId: string, newName: string) => void;
+  onDeletePlaylist: (playlistId: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPlaylistSelect, onCreatePlaylist, onUploadClick, likedCount }) => {
+const PlaylistContextMenu: React.FC<{
+  playlist: Playlist;
+  onRename: (id: string, name: string) => void;
+  onDelete: (id: string) => void;
+  onClose: () => void;
+}> = ({ playlist, onRename, onDelete, onClose }) => {
+  const [renaming, setRenaming] = useState(false);
+  const [nameValue, setNameValue] = useState(playlist.name);
+  const ref = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) onClose();
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [onClose]);
+
+  useEffect(() => {
+    if (renaming) inputRef.current?.focus();
+  }, [renaming]);
+
+  const submitRename = () => {
+    onRename(playlist.id, nameValue);
+    onClose();
+  };
+
+  return (
+    <div
+      ref={ref}
+      className="absolute z-50 right-0 top-8 w-48 bg-[#282828] border border-white/10 rounded-xl shadow-2xl overflow-hidden"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {renaming ? (
+        <div className="p-3">
+          <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Rename Playlist</p>
+          <input
+            ref={inputRef}
+            type="text"
+            value={nameValue}
+            onChange={(e) => setNameValue(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') submitRename(); if (e.key === 'Escape') onClose(); }}
+            className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-green-500 transition mb-2"
+          />
+          <div className="flex gap-2">
+            <button
+              onClick={submitRename}
+              className="flex-1 bg-green-500 hover:bg-green-400 text-black font-black text-xs py-1.5 rounded-lg transition"
+            >
+              Save
+            </button>
+            <button
+              onClick={onClose}
+              className="flex-1 bg-white/10 hover:bg-white/20 text-white font-bold text-xs py-1.5 rounded-lg transition"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="py-1">
+          <button
+            onClick={() => setRenaming(true)}
+            className="w-full text-left px-4 py-2.5 text-sm text-white hover:bg-white/10 flex items-center gap-3 transition-colors"
+          >
+            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            Rename
+          </button>
+          <button
+            onClick={() => { onDelete(playlist.id); onClose(); }}
+            className="w-full text-left px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 flex items-center gap-3 transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            Delete
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPlaylistSelect, onCreatePlaylist, onUploadClick, likedCount, onRenamePlaylist, onDeletePlaylist }) => {
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+
   return (
     <div className="w-72 bg-black flex flex-col gap-3 p-3 h-full border-right border-white/5">
       {/* Brand */}
@@ -99,22 +189,44 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPl
             </div>
           ) : (
             playlists.map(p => (
-              <button
-                key={p.id}
-                onClick={() => onPlaylistSelect(p)}
-                className="flex items-center gap-3 w-full p-2.5 hover:bg-white/5 rounded-xl transition group"
-              >
-                <div className="relative group/cover">
-                  <img src={p.coverUrl} className="w-14 h-14 rounded-lg shadow-xl object-cover" alt={p.name} />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/cover:opacity-100 flex items-center justify-center rounded-lg transition-opacity">
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M7 6v12l10-6z" /></svg>
+              <div key={p.id} className="relative group/row">
+                <button
+                  onClick={() => onPlaylistSelect(p)}
+                  className="flex items-center gap-3 w-full p-2.5 hover:bg-white/5 rounded-xl transition pr-10"
+                >
+                  <div className="relative group/cover flex-shrink-0">
+                    <img src={p.coverUrl} className="w-14 h-14 rounded-lg shadow-xl object-cover" alt={p.name} />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/cover:opacity-100 flex items-center justify-center rounded-lg transition-opacity">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M7 6v12l10-6z" /></svg>
+                    </div>
                   </div>
+                  <div className="text-left overflow-hidden flex-1 min-w-0">
+                    <p className="text-sm font-black text-white truncate mb-0.5">{p.name}</p>
+                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-tight">Playlist • {p.songIds.length} songs</p>
+                  </div>
+                </button>
+
+                {/* ⋯ Menu Button */}
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover/row:opacity-100 transition-opacity">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setOpenMenuId(openMenuId === p.id ? null : p.id); }}
+                    className="w-7 h-7 rounded-full hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                    title="More options"
+                  >
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm0 7a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm0 7a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
+                    </svg>
+                  </button>
+                  {openMenuId === p.id && (
+                    <PlaylistContextMenu
+                      playlist={p}
+                      onRename={onRenamePlaylist}
+                      onDelete={onDeletePlaylist}
+                      onClose={() => setOpenMenuId(null)}
+                    />
+                  )}
                 </div>
-                <div className="text-left overflow-hidden">
-                  <p className="text-sm font-black text-white truncate mb-0.5">{p.name}</p>
-                  <p className="text-[10px] text-gray-500 font-bold uppercase tracking-tight">Playlist • RAAGA</p>
-                </div>
-              </button>
+              </div>
             ))
           )}
         </div>

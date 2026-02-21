@@ -104,6 +104,25 @@ const App: React.FC = () => {
     alert("Welcome to RAAGA Pro! Enjoy unlimited downloads and HD audio.");
   };
 
+  const handleRenamePlaylist = (playlistId: string, newName: string) => {
+    const updated = playlists.map(p =>
+      p.id === playlistId ? { ...p, name: newName.trim() || p.name } : p
+    );
+    setPlaylists(updated);
+    localStorage.setItem('raaga_playlists', JSON.stringify(updated));
+  };
+
+  const handleDeletePlaylist = (playlistId: string) => {
+    const updated = playlists.filter(p => p.id !== playlistId);
+    setPlaylists(updated);
+    localStorage.setItem('raaga_playlists', JSON.stringify(updated));
+    // If we were viewing the deleted playlist, go back home
+    if (selectedPlaylist?.id === playlistId) {
+      setSelectedPlaylist(null);
+      setCurrentView('home');
+    }
+  };
+
   const handleAddToPlaylist = (songId: string, playlistId: string) => {
     const updated = playlists.map(p =>
       p.id === playlistId && !p.songIds.includes(songId)
@@ -170,6 +189,8 @@ const App: React.FC = () => {
           setIsUploadModalOpen(true);
         }}
         likedCount={likedSongIds.length}
+        onRenamePlaylist={handleRenamePlaylist}
+        onDeletePlaylist={handleDeletePlaylist}
       />
 
       <div className="flex-1 flex flex-col relative overflow-hidden bg-gradient-to-b from-[#1a1a1a] to-black">
