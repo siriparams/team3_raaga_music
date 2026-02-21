@@ -176,17 +176,19 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen w-full bg-black overflow-hidden font-sans select-none">
-      {/* Mobile backdrop overlay */}
+      {/* Mobile backdrop */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-40 bg-black/70 md:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
-      {/* Sidebar — fixed overlay on mobile, static on desktop */}
-      <div className={`fixed md:relative z-50 md:z-auto h-full transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-        }`}>
+      {/* Sidebar — always fixed, slides in/out on mobile, always visible on desktop */}
+      <div
+        className={`fixed left-0 top-0 z-50 h-full transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          } md:translate-x-0`}
+      >
         <Sidebar
           currentView={currentView}
           setView={(v) => { setCurrentView(v); setIsSidebarOpen(false); }}
@@ -208,6 +210,9 @@ const App: React.FC = () => {
           onClose={() => setIsSidebarOpen(false)}
         />
       </div>
+
+      {/* Desktop spacer so main content doesn't go under sidebar */}
+      <div className="hidden md:block w-72 flex-shrink-0" />
 
       <div className="flex-1 flex flex-col relative overflow-hidden bg-gradient-to-b from-[#1a1a1a] to-black min-w-0">
         {/* Header / Navbar */}
