@@ -12,6 +12,7 @@ interface SidebarProps {
   likedCount: number;
   onRenamePlaylist: (playlistId: string, newName: string) => void;
   onDeletePlaylist: (playlistId: string) => void;
+  onClose: () => void;
 }
 
 const PlaylistContextMenu: React.FC<{
@@ -100,17 +101,29 @@ const PlaylistContextMenu: React.FC<{
   );
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPlaylistSelect, onCreatePlaylist, onUploadClick, likedCount, onRenamePlaylist, onDeletePlaylist }) => {
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, playlists, onPlaylistSelect, onCreatePlaylist, onUploadClick, likedCount, onRenamePlaylist, onDeletePlaylist, onClose }) => {
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   return (
     <div className="w-72 bg-black flex flex-col gap-3 p-3 h-full border-right border-white/5">
       {/* Brand */}
-      <div className="px-4 py-4 flex items-center gap-3">
-        <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center rotate-3 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-          <span className="text-black font-black text-xl italic leading-none">R</span>
+      <div className="px-4 py-4 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center rotate-3 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+            <span className="text-black font-black text-xl italic leading-none">R</span>
+          </div>
+          <span className="text-2xl font-black text-white italic tracking-tighter">RAAGA</span>
         </div>
-        <span className="text-2xl font-black text-white italic tracking-tighter">RAAGA</span>
+        {/* Close button — mobile only */}
+        <button
+          onClick={onClose}
+          className="md:hidden p-2 text-gray-400 hover:text-white transition rounded-xl hover:bg-white/10"
+          aria-label="Close menu"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
       {/* Primary Nav */}

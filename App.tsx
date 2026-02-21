@@ -15,6 +15,7 @@ const App: React.FC = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isProModalOpen, setIsProModalOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [authType, setAuthType] = useState<'login' | 'signup'>('login');
   const [currentView, setCurrentView] = useState<ViewType>('home');
   const [activeSong, setActiveSong] = useState<Song | null>(null);
@@ -175,28 +176,53 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen w-full bg-black overflow-hidden font-sans select-none">
-      <Sidebar
-        currentView={currentView}
-        setView={setCurrentView}
-        playlists={playlists}
-        onPlaylistSelect={(p) => {
-          setSelectedPlaylist(p);
-          setCurrentView('playlist-detail');
-        }}
-        onCreatePlaylist={handleCreatePlaylist}
-        onUploadClick={() => {
-          if (!currentUser) { setIsAuthModalOpen(true); return; }
-          setIsUploadModalOpen(true);
-        }}
-        likedCount={likedSongIds.length}
-        onRenamePlaylist={handleRenamePlaylist}
-        onDeletePlaylist={handleDeletePlaylist}
-      />
+      {/* Mobile backdrop overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
 
-      <div className="flex-1 flex flex-col relative overflow-hidden bg-gradient-to-b from-[#1a1a1a] to-black">
+      {/* Sidebar — fixed overlay on mobile, static on desktop */}
+      <div className={`fixed md:relative z-50 md:z-auto h-full transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+        }`}>
+        <Sidebar
+          currentView={currentView}
+          setView={(v) => { setCurrentView(v); setIsSidebarOpen(false); }}
+          playlists={playlists}
+          onPlaylistSelect={(p) => {
+            setSelectedPlaylist(p);
+            setCurrentView('playlist-detail');
+            setIsSidebarOpen(false);
+          }}
+          onCreatePlaylist={handleCreatePlaylist}
+          onUploadClick={() => {
+            if (!currentUser) { setIsAuthModalOpen(true); return; }
+            setIsUploadModalOpen(true);
+            setIsSidebarOpen(false);
+          }}
+          likedCount={likedSongIds.length}
+          onRenamePlaylist={handleRenamePlaylist}
+          onDeletePlaylist={handleDeletePlaylist}
+          onClose={() => setIsSidebarOpen(false)}
+        />
+      </div>
+
+      <div className="flex-1 flex flex-col relative overflow-hidden bg-gradient-to-b from-[#1a1a1a] to-black min-w-0">
         {/* Header / Navbar */}
-        <header className="h-16 flex items-center justify-between px-8 bg-black/40 backdrop-blur-xl sticky top-0 z-10 border-b border-white/5">
-          <div className="flex items-center gap-4">
+        <header className="h-16 flex items-center justify-between px-4 md:px-8 bg-black/40 backdrop-blur-xl sticky top-0 z-10 border-b border-white/5">
+          <div className="flex items-center gap-2 md:gap-4">
+            {/* Hamburger — mobile only */}
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden p-2 text-gray-400 hover:text-white transition rounded-xl hover:bg-white/10"
+              aria-label="Open menu"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
             <div className="flex items-center gap-2">
               <button onClick={() => window.history.back()} className="p-2 bg-black/60 rounded-full hover:bg-black/80 transition text-white">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
