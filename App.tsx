@@ -104,6 +104,16 @@ const App: React.FC = () => {
     alert("Welcome to RAAGA Pro! Enjoy unlimited downloads and HD audio.");
   };
 
+  const handleAddToPlaylist = (songId: string, playlistId: string) => {
+    const updated = playlists.map(p =>
+      p.id === playlistId && !p.songIds.includes(songId)
+        ? { ...p, songIds: [...p.songIds, songId] }
+        : p
+    );
+    setPlaylists(updated);
+    localStorage.setItem('raaga_playlists', JSON.stringify(updated));
+  };
+
   const handleDownload = (song: Song) => {
     if (!currentUser) {
       setAuthType('login');
@@ -238,6 +248,8 @@ const App: React.FC = () => {
             allSongs={allSongs}
             likedSongIds={likedSongIds}
             onToggleLike={handleToggleLike}
+            playlists={playlists}
+            onAddToPlaylist={handleAddToPlaylist}
           />
         </main>
       </div>
